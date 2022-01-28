@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:lamborghini/screens/pages/landing_page.dart';
+import 'package:lamborghini/services/network/auth.dart';
+import 'package:lamborghini/services/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final isLoggedIn = await SharedPrefs.getBooleanSharedPreference("isLoggedIn");
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
+  final bool isLoggedIn;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Lamborghini',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Provider<AuthBase>(
+      create: (context) => Auth(),
+      child: MaterialApp(
+        title: 'Lamborghini',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: LandingPage(
+          isLoggedIn: isLoggedIn,
+        ),
       ),
-      home: const LandingPage(),
     );
   }
 }

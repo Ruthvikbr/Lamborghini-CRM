@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lamborghini/screens/components/custom_button.dart';
-import 'package:lamborghini/screens/components/text_compontent.dart';
+import 'package:lamborghini/screens/components/text_component.dart';
 import 'package:lamborghini/services/constants/strings.dart';
 
 class SignUp extends StatefulWidget {
