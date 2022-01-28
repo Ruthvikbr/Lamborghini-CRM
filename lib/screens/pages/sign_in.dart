@@ -77,17 +77,30 @@ class _SignInState extends State<SignIn> {
         padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: accountRequest!.loading
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.spaceBetween,
           children: [
             Image.asset(
               "assets/images/logo.png",
               width: 122,
               height: 145,
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                  child: _buildForm(accountRequest, context)),
-            ),
+            accountRequest.loading
+                ? AlertDialog(
+                    content: Row(
+                      children: [
+                        const CircularProgressIndicator(),
+                        Container(
+                            margin: const EdgeInsets.only(left: 7),
+                            child: Text(Strings.pleaseWait)),
+                      ],
+                    ),
+                  )
+                : Expanded(
+                    child: SingleChildScrollView(
+                        child: _buildForm(accountRequest, context)),
+                  ),
           ],
         ),
       ),

@@ -21,4 +21,7 @@ class Strings {
   static String signUpText = "CREATE ACCOUNT";
   static String existingAccount = "Sign In";
   static String existingMember = "Already have an account?";
+
+  //UTILS
+  static String pleaseWait = "Please wait...";
 }

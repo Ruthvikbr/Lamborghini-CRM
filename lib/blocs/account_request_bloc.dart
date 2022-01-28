@@ -25,10 +25,14 @@ class AccountRequestBloc {
   ) async {
     updateWith(loading: true, submitted: true);
     try {
-      return await authBase.accountRequest(
+      SimpleResponse simpleResponse = await authBase.accountRequest(
         accountRequest,
         accountRequestType,
       );
+      if (!simpleResponse.isSuccessful) {
+        updateWith(loading: false);
+      }
+      return simpleResponse;
     } catch (e) {
       updateWith(loading: false);
       return SimpleResponse(
