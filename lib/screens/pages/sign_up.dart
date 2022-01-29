@@ -24,7 +24,6 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   void initState() {
@@ -33,16 +32,13 @@ class _SignUpState extends State<SignUp> {
 
   final FocusNode _mobileFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
-  final FocusNode _confirmPasswordFocusNode = FocusNode();
 
   @override
   void dispose() {
     _mobileController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     _mobileFocusNode.dispose();
     _passwordFocusNode.dispose();
-    _confirmPasswordFocusNode.dispose();
     super.dispose();
   }
 
@@ -148,20 +144,6 @@ class _SignUpState extends State<SignUp> {
           onEditingCompleted: (accountRequest) => _onSubmit(accountRequest),
           onChanged: (password) =>
               widget.accountRequestBloc.updatePassword(password),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        TextFieldComponent(
-          label: Strings.confirmPasswordLabel,
-          textInputType: TextInputType.text,
-          obscureText: false,
-          accountRequest: accountRequest,
-          focusNode: _confirmPasswordFocusNode,
-          controller: _confirmPasswordController,
-          onEditingCompleted: (accountRequest) => _onSubmit(accountRequest),
-          onChanged: (password) =>
-              {},
         ),
         const SizedBox(
           height: 20,
