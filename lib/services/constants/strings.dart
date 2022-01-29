@@ -5,6 +5,7 @@ class Strings {
   static String invalidMobileText = "Enter a valid mobile number";
   static String mobileLabel = "Mobile";
   static String passwordLabel = "Password";
+  static String confirmPasswordLabel = "Confirm Password";
   static String createAccount = "Create a new account";
   static String notMember = "Not a member yet?";
   static String invalidCredentials = "Invalid user credentials";

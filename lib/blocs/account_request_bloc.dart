@@ -9,7 +9,7 @@ class AccountRequestBloc {
 
   final AuthBase authBase;
 
-  final StreamController<AccountRequest> _streamController = StreamController();
+  final StreamController<AccountRequest> _streamController = StreamController.broadcast();
 
   Stream<AccountRequest> get accountRequestStream => _streamController.stream;
 

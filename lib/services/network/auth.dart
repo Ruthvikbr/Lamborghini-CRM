@@ -32,7 +32,6 @@ class Auth implements AuthBase {
       try {
         final SimpleResponse simpleResponse =
             SimpleResponse.fromJson(jsonDecode(response.body.toString()));
-        print("${simpleResponse.message} ${simpleResponse.isSuccessful}");
         await SharedPrefs.setStringSharedPreference(
             "mobile", accountRequest.mobile);
         await SharedPrefs.setStringSharedPreference(
@@ -40,7 +39,6 @@ class Auth implements AuthBase {
         await SharedPrefs.setBooleanSharedPreference("isLoggedIn", true);
         return simpleResponse;
       } catch (e) {
-        print(e);
         final SimpleResponse simpleResponse = SimpleResponse(
           isSuccessful: false,
           message: "Something went wrong",

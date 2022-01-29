@@ -67,41 +67,43 @@ class _SignInState extends State<SignIn> {
   }
 
   Widget _buildContents(BuildContext context, AccountRequest? accountRequest) {
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage("assets/images/login-background.png"),
-        fit: BoxFit.cover,
-      )),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: accountRequest!.loading
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset(
-              "assets/images/logo.png",
-              width: 122,
-              height: 145,
-            ),
-            accountRequest.loading
-                ? AlertDialog(
-                    content: Row(
-                      children: [
-                        const CircularProgressIndicator(),
-                        Container(
-                            margin: const EdgeInsets.only(left: 7),
-                            child: Text(Strings.pleaseWait)),
-                      ],
+    return Material(
+      child: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage("assets/images/login-background.png"),
+          fit: BoxFit.cover,
+        )),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: accountRequest!.loading
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(
+                "assets/images/logo.png",
+                width: 122,
+                height: 145,
+              ),
+              accountRequest.loading
+                  ? AlertDialog(
+                      content: Row(
+                        children: [
+                          const CircularProgressIndicator(),
+                          Container(
+                              margin: const EdgeInsets.only(left: 7),
+                              child: Text(Strings.pleaseWait)),
+                        ],
+                      ),
+                    )
+                  : Expanded(
+                      child: SingleChildScrollView(
+                          child: _buildForm(accountRequest, context)),
                     ),
-                  )
-                : Expanded(
-                    child: SingleChildScrollView(
-                        child: _buildForm(accountRequest, context)),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -131,7 +133,7 @@ class _SignInState extends State<SignIn> {
           focusNode: _mobileFocusNode,
           controller: _mobileController,
           onEditingCompleted: (accountRequest) =>
-              _emailEditingCompleted(accountRequest),
+              _mobileEditingCompleted(accountRequest),
           onChanged: (mobile) => widget.accountRequestBloc.updateMobile(mobile),
         ),
         const SizedBox(
@@ -182,8 +184,12 @@ class _SignInState extends State<SignIn> {
           height: 10,
         ),
         InkWell(
-          onTap: () =>
-              !accountRequest!.loading ? _navigateToSignUpPage(context) : () {},
+          onTap: () => !accountRequest!.loading
+              ? _navigateToSignUpPage(
+                  context,
+                  widget.accountRequestBloc,
+                )
+              : () {},
           child: TextComponent(
             text: Strings.createAccount,
             textStyle: const TextStyle(
@@ -198,7 +204,7 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  void _emailEditingCompleted(AccountRequest? accountRequest) {
+  void _mobileEditingCompleted(AccountRequest? accountRequest) {
     final nextFocus = accountRequest != null &&
             accountRequest.mobileValidator.isValid(accountRequest.mobile)
         ? _passwordFocusNode
@@ -249,9 +255,11 @@ class _SignInState extends State<SignIn> {
         });
   }
 
-  void _navigateToSignUpPage(BuildContext context) {
-    Navigator.of(context)
-        .push(HorizontalPageAnimation.createRoute(const SignUp()));
+  void _navigateToSignUpPage(
+      BuildContext context, AccountRequestBloc accountRequestBloc) {
+    Navigator.of(context).push(HorizontalPageAnimation.createRoute(SignUp(
+      accountRequestBloc: accountRequestBloc,
+    )));
   }
 
   void _navigateToHomePage(BuildContext context) {
