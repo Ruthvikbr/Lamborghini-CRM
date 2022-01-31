@@ -67,7 +67,7 @@ class _SignUpState extends State<SignUp> {
         decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/registration-background.png"),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             )),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
