@@ -188,6 +188,7 @@ class _SignInState extends State<SignIn> {
               ? _navigateToSignUpPage(
                   context,
                   widget.accountRequestBloc,
+                  widget,
                 )
               : () {},
           child: TextComponent(
@@ -219,7 +220,7 @@ class _SignInState extends State<SignIn> {
         ApiConstants.login,
       );
       if (simpleResponse.isSuccessful) {
-        _navigateToHomePage(context);
+        _navigateToHomePage(context, widget);
       } else {
         _mobileController.clear();
         _passwordController.clear();
@@ -255,15 +256,17 @@ class _SignInState extends State<SignIn> {
         });
   }
 
-  void _navigateToSignUpPage(
-      BuildContext context, AccountRequestBloc accountRequestBloc) {
-    Navigator.of(context).push(HorizontalPageAnimation.createRoute(SignUp(
-      accountRequestBloc: accountRequestBloc,
-    )));
+  void _navigateToSignUpPage(BuildContext context,
+      AccountRequestBloc accountRequestBloc, Widget currentChild) {
+    Navigator.of(context).push(HorizontalPageAnimation.createRoute(
+        SignUp(
+          accountRequestBloc: accountRequestBloc,
+        ),
+        currentChild));
   }
 
-  void _navigateToHomePage(BuildContext context) {
-    Navigator.of(context)
-        .push(HorizontalPageAnimation.createRoute(const HomePage()));
+  void _navigateToHomePage(BuildContext context, Widget currentChild) {
+    Navigator.of(context).push(
+        HorizontalPageAnimation.createRoute(const HomePage(), currentChild));
   }
 }

@@ -66,9 +66,9 @@ class _SignUpState extends State<SignUp> {
       child: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/registration-background.png"),
-              fit: BoxFit.fill,
-            )),
+          image: AssetImage("assets/images/registration-background.png"),
+          fit: BoxFit.fill,
+        )),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
           child: Column(
@@ -84,19 +84,19 @@ class _SignUpState extends State<SignUp> {
               ),
               accountRequest.loading
                   ? AlertDialog(
-                content: Row(
-                  children: [
-                    const CircularProgressIndicator(),
-                    Container(
-                        margin: const EdgeInsets.only(left: 7),
-                        child: Text(Strings.pleaseWait)),
-                  ],
-                ),
-              )
+                      content: Row(
+                        children: [
+                          const CircularProgressIndicator(),
+                          Container(
+                              margin: const EdgeInsets.only(left: 7),
+                              child: Text(Strings.pleaseWait)),
+                        ],
+                      ),
+                    )
                   : Expanded(
-                child: SingleChildScrollView(
-                    child: _buildForm(accountRequest, context)),
-              ),
+                      child: SingleChildScrollView(
+                          child: _buildForm(accountRequest, context)),
+                    ),
             ],
           ),
         ),
@@ -180,7 +180,7 @@ class _SignUpState extends State<SignUp> {
         ),
         InkWell(
           onTap: () =>
-          !accountRequest!.loading ? _navigateToSignUpPage(context) : () {},
+              !accountRequest!.loading ? _navigateToSignInPage(context) : () {},
           child: TextComponent(
             text: Strings.existingAccount,
             textStyle: const TextStyle(
@@ -197,7 +197,7 @@ class _SignUpState extends State<SignUp> {
 
   void _mobileEditingCompleted(AccountRequest? accountRequest) {
     final nextFocus = accountRequest != null &&
-        accountRequest.mobileValidator.isValid(accountRequest.mobile)
+            accountRequest.mobileValidator.isValid(accountRequest.mobile)
         ? _passwordFocusNode
         : _mobileFocusNode;
     FocusScope.of(context).requestFocus(nextFocus);
@@ -210,7 +210,7 @@ class _SignUpState extends State<SignUp> {
         ApiConstants.register,
       );
       if (simpleResponse.isSuccessful) {
-        _navigateToHomePage(context);
+        _navigateToHomePage(context, widget);
       } else {
         _mobileController.clear();
         _passwordController.clear();
@@ -246,13 +246,12 @@ class _SignUpState extends State<SignUp> {
         });
   }
 
-  void _navigateToSignUpPage(BuildContext context) {
-    Navigator.of(context)
-        .pop();
+  void _navigateToSignInPage(BuildContext context) {
+    Navigator.of(context).pop();
   }
 
-  void _navigateToHomePage(BuildContext context) {
-    Navigator.of(context)
-        .push(HorizontalPageAnimation.createRoute(const HomePage()));
+  void _navigateToHomePage(BuildContext context, Widget currentChild) {
+    Navigator.of(context).push(
+        HorizontalPageAnimation.createRoute(const HomePage(), currentChild));
   }
 }
