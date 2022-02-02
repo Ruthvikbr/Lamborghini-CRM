@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lamborghini/screens/pages/landing_page.dart';
+import 'package:lamborghini/services/constants/color_constants.dart';
 import 'package:lamborghini/services/network/auth.dart';
 import 'package:lamborghini/services/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Lamborghini',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Constants.materialBlackColor,
         ),
         home: LandingPage(
           isLoggedIn: isLoggedIn,

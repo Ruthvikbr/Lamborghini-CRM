@@ -6,7 +6,7 @@ import 'package:lamborghini/screens/components/custom_button.dart';
 import 'package:lamborghini/screens/components/text_component.dart';
 import 'package:lamborghini/screens/components/text_field_component.dart';
 import 'package:lamborghini/screens/pages/home_page.dart';
-import 'package:lamborghini/screens/pages/sign_up.dart';
+import 'package:lamborghini/screens/pages/auth/sign_up.dart';
 import 'package:lamborghini/services/constants/api_constants.dart';
 import 'package:lamborghini/services/constants/strings.dart';
 import 'package:lamborghini/services/horizontal_page_animation.dart';
