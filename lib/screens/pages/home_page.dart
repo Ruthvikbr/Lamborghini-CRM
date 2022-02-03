@@ -3,6 +3,8 @@ import 'package:lamborghini/screens/components/home_scaffold.dart';
 import 'package:lamborghini/screens/components/tab_item.dart';
 import 'package:lamborghini/screens/pages/info/info_page.dart';
 import 'package:lamborghini/screens/pages/merch/merch_page.dart';
+import 'package:lamborghini/services/network/api.dart';
+import 'package:provider/provider.dart';
 import 'account/account_page.dart';
 import 'dashboard/dashboard_page.dart';
 
@@ -35,15 +37,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async =>
-          !await navigatorKeys[_currentTab]!.currentState!.maybePop(),
-      child: HomeScaffold(
-        currentTab: _currentTab,
-        onSelectTab: _select,
-        widgetBuilders: widgetBuilders,
-        navigatorKeys: navigatorKeys,
-        currentIndex: _currentIndex ,
+    return Provider<ApiBase>(
+      create: (context)=> Api(),
+      child: WillPopScope(
+        onWillPop: () async =>
+            !await navigatorKeys[_currentTab]!.currentState!.maybePop(),
+        child: HomeScaffold(
+          currentTab: _currentTab,
+          onSelectTab: _select,
+          widgetBuilders: widgetBuilders,
+          navigatorKeys: navigatorKeys,
+          currentIndex: _currentIndex ,
+        ),
       ),
     );
   }

@@ -30,9 +30,7 @@ class AccountRequestBloc {
         accountRequest,
         accountRequestType,
       );
-      if (!simpleResponse.isSuccessful) {
         updateWith(loading: false);
-      }
       return simpleResponse;
     } catch (e) {
       updateWith(loading: false);
