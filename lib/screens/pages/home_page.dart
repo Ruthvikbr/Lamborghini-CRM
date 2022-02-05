@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     return {
       TabItem.dashboard: (_) => const DashboardPage(),
       TabItem.merch: (_) => const MerchPage(),
-      TabItem.info: (_) => const InfoPage(),
+      TabItem.info: (context) => InfoPage.create(context),
       TabItem.account: (_) => const AccountPage(),
     };
   }

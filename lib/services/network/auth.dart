@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:lamborghini/model/account_request.dart';
 import 'package:lamborghini/model/simple_response.dart';
 import 'package:http/http.dart' as http;
@@ -36,9 +37,11 @@ class Auth implements AuthBase {
             "mobile", accountRequest.mobile);
         await SharedPrefs.setStringSharedPreference(
             "password", accountRequest.password);
+        debugPrint(simpleResponse.message);
         await SharedPrefs.setBooleanSharedPreference("isLoggedIn", true);
         return simpleResponse;
       } catch (e) {
+        debugPrint(e.toString());
         final SimpleResponse simpleResponse = SimpleResponse(
           isSuccessful: false,
           message: "Something went wrong",
@@ -49,6 +52,7 @@ class Auth implements AuthBase {
         return simpleResponse;
       }
     } else {
+      debugPrint("fail");
       final SimpleResponse simpleResponse = SimpleResponse(
         isSuccessful: false,
         message: "Something went wrong",

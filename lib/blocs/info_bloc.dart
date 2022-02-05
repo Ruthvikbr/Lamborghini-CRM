@@ -1,55 +1,47 @@
 import 'dart:async';
 
-import 'package:lamborghini/model/car_request.dart';
-import 'package:lamborghini/model/parent_request.dart';
+import 'package:lamborghini/model/car.dart';
+import 'package:lamborghini/model/cars_response.dart';
+import 'package:lamborghini/model/parent.dart';
 import 'package:lamborghini/model/parent_response.dart';
 import 'package:lamborghini/services/network/api.dart';
 
 class InfoBloc {
   final ApiBase apiBase;
 
-  InfoBloc({required this.apiBase});
+  InfoBloc({required this.apiBase}) {
+    getCategories();
+    getCars();
+  }
 
-  final StreamController<ParentRequest> _parentStreamController = StreamController();
+  final StreamController<List<Parent>> _parentStreamController =
+      StreamController();
 
-  Stream<ParentRequest> get parentRequestStream => _parentStreamController.stream;
+  Stream<List<Parent>> get parentStream => _parentStreamController.stream;
 
-  final StreamController<CarRequest> _carStreamController = StreamController();
+  final StreamController<List<Car>> _carStreamController = StreamController();
 
-  Stream<CarRequest> get carRequestStream => _carStreamController.stream;
+  Stream<List<Car>> get carRequestStream => _carStreamController.stream;
 
-  ParentRequest _parentRequest = ParentRequest(
-    parentResponse: ParentResponse(
-      parentList: [],
-    ),
-  );
+  void _setCategories(List<Parent> categories) =>
+      _parentStreamController.add(categories);
 
+  void _setCars(List<Car> cars) => _carStreamController.add(cars);
 
   void dispose() {
     _parentStreamController.close();
     _carStreamController.close();
   }
 
-  Future<ParentResponse> getParentCategories() async {
-    updateParent(loading: true);
-    try {
-      ParentResponse parentResponse = await apiBase.getParentCategories();
-      updateParent(loading: false, parentResponse: parentResponse);
-      return parentResponse;
-    } catch (e) {
-      updateParent(loading: false);
-      return ParentResponse(parentList: []);
-    }
+  Future<List<Parent>> getCategories() async {
+    ParentResponse parentResponse = await apiBase.getParentCategories();
+    _setCategories(parentResponse.parentList);
+    return parentResponse.parentList;
   }
 
-  void updateParent({
-    bool? loading,
-    ParentResponse? parentResponse,
-  }) {
-    _parentRequest = _parentRequest.copyWith(
-      loading: loading,
-      parentResponse: parentResponse,
-    );
-    _parentStreamController.add(_parentRequest);
+  Future<List<Car>> getCars() async {
+    CarResponse carResponse = await apiBase.getCars();
+    _setCars(carResponse.carModelList);
+    return carResponse.carModelList;
   }
 }

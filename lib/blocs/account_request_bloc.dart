@@ -30,7 +30,7 @@ class AccountRequestBloc {
         accountRequest,
         accountRequestType,
       );
-        updateWith(loading: false);
+      updateWith(loading: false);
       return simpleResponse;
     } catch (e) {
       updateWith(loading: false);

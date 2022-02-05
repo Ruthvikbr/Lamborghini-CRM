@@ -20,9 +20,10 @@ class HomeScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(currentIndex);
     return Scaffold(
-      body: Container(),
+      body: Center(
+        child: widgetBuilders.values.elementAt(currentIndex).call(context),
+      ),
       bottomNavigationBar: BottomNavigationBar(
 
         type: BottomNavigationBarType.fixed,
