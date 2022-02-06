@@ -12,7 +12,7 @@ class CategoryItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
-        shadowColor: Colors.black,
+        shadowColor: Colors.white,
         elevation: 8,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),

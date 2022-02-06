@@ -26,7 +26,9 @@ class ListItemBuilder<T> extends StatelessWidget {
       return const SomethingWentWrongPage();
     } else {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: Colors.white,
+        ),
       );
     }
   }

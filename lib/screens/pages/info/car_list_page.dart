@@ -3,7 +3,9 @@ import 'package:lamborghini/blocs/categories_bloc.dart';
 import 'package:lamborghini/model/car.dart';
 import 'package:lamborghini/model/list_item_builder.dart';
 import 'package:lamborghini/model/parent.dart';
+import 'package:lamborghini/screens/components/app_bar_text_component.dart';
 import 'package:lamborghini/screens/components/car_item.dart';
+import 'package:lamborghini/screens/pages/info/car_detail_page.dart';
 import 'package:lamborghini/services/network/api.dart';
 import 'package:provider/provider.dart';
 
@@ -32,13 +34,11 @@ class CarList extends StatefulWidget {
 }
 
 class _CarListState extends State<CarList> {
-
   @override
   void initState() {
     super.initState();
     widget.bloc.getCars(widget.parent.parentModelName);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +47,19 @@ class _CarListState extends State<CarList> {
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(widget.parent.parentModelName),
+            title: AppBarTextComponent(
+              text: widget.parent.parentModelName,
+            ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
           body: ListItemBuilder<Car>(
             snapshot: snapshot,
             itemWidgetBuilder: (context, car) => CarItem(
               car: car,
+              onPress: () => navigateToCarDetailScreen(
+                context,
+                car,
+              ),
             ),
           ),
         );
@@ -61,10 +67,9 @@ class _CarListState extends State<CarList> {
     );
   }
 
-  void navigateToCarDetailsScreen(BuildContext context, Parent parent) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-          builder: (context) => CarList(bloc: widget.bloc, parent: parent)),
-    );
+  void navigateToCarDetailScreen(BuildContext context, Car car) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => CarDetail(car: car),
+    ));
   }
 }

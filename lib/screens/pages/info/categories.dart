@@ -29,7 +29,7 @@ class Categories extends StatelessWidget {
       stream: bloc.parentStream,
       builder: (context, snapshot) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
           body: ListItemBuilder<Parent>(
             snapshot: snapshot,
             itemWidgetBuilder: (context, parent) => CategoryItem(
