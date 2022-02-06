@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:lamborghini/blocs/info_bloc.dart';
+import 'package:lamborghini/blocs/categories_bloc.dart';
 import 'package:lamborghini/model/list_item_builder.dart';
 import 'package:lamborghini/model/parent.dart';
 import 'package:lamborghini/screens/components/category_item.dart';
 import 'package:lamborghini/services/network/api.dart';
 import 'package:provider/provider.dart';
 
-class InfoPage extends StatelessWidget {
-  const InfoPage({Key? key, required this.bloc}) : super(key: key);
-  final InfoBloc bloc;
+import 'car_list_page.dart';
+
+class Categories extends StatelessWidget {
+  const Categories({Key? key, required this.bloc}) : super(key: key);
+  final CategoriesBloc bloc;
 
   static Widget create(BuildContext context) {
     final apiBase = Provider.of<ApiBase>(context, listen: false);
-    return Provider<InfoBloc>(
-      create: (_) => InfoBloc(apiBase: apiBase),
+    return Provider<CategoriesBloc>(
+      create: (_) => CategoriesBloc(apiBase: apiBase),
       dispose: (_, bloc) => bloc.dispose(),
-      child: Consumer<InfoBloc>(
-        builder: (_, bloc, __) => InfoPage(bloc: bloc),
+      child: Consumer<CategoriesBloc>(
+        builder: (_, bloc, __) => Categories(bloc: bloc),
       ),
     );
   }
@@ -32,10 +34,22 @@ class InfoPage extends StatelessWidget {
             snapshot: snapshot,
             itemWidgetBuilder: (context, parent) => CategoryItem(
               parent: parent,
+              onPress: () => navigateToCarDetailsScreen(
+                context,
+                parent,
+              ),
             ),
           ),
         );
       },
+    );
+  }
+
+  void navigateToCarDetailsScreen(BuildContext context, Parent parent) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CarList(bloc: bloc, parent: parent),
+      ),
     );
   }
 }

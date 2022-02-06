@@ -6,12 +6,11 @@ import 'package:lamborghini/model/parent.dart';
 import 'package:lamborghini/model/parent_response.dart';
 import 'package:lamborghini/services/network/api.dart';
 
-class InfoBloc {
+class CategoriesBloc {
   final ApiBase apiBase;
 
-  InfoBloc({required this.apiBase}) {
+  CategoriesBloc({required this.apiBase}) {
     getCategories();
-    getCars();
   }
 
   final StreamController<List<Parent>> _parentStreamController =
@@ -19,9 +18,9 @@ class InfoBloc {
 
   Stream<List<Parent>> get parentStream => _parentStreamController.stream;
 
-  final StreamController<List<Car>> _carStreamController = StreamController();
+  final StreamController<List<Car>> _carStreamController = StreamController.broadcast();
 
-  Stream<List<Car>> get carRequestStream => _carStreamController.stream;
+  Stream<List<Car>> get carStream => _carStreamController.stream;
 
   void _setCategories(List<Parent> categories) =>
       _parentStreamController.add(categories);
@@ -39,9 +38,9 @@ class InfoBloc {
     return parentResponse.parentList;
   }
 
-  Future<List<Car>> getCars() async {
+  Future<void> getCars(String categoryName) async {
     CarResponse carResponse = await apiBase.getCars();
-    _setCars(carResponse.carModelList);
-    return carResponse.carModelList;
+    List<Car> cars = carResponse.carModelList.where((element) => element.parentModelName==categoryName).toList();
+    _setCars(cars);
   }
 }

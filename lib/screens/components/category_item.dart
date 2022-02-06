@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lamborghini/model/parent.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({Key? key, required this.parent}) : super(key: key);
+  const CategoryItem({Key? key, required this.parent, required this.onPress})
+      : super(key: key);
   final Parent parent;
+  final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class CategoryItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
         ),
         child: InkWell(
-          onTap: () {},
+          onTap: () => onPress(),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(30.0, 0, 30.0, 0),
             child: Ink.image(

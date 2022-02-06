@@ -29,4 +29,11 @@ class Constants {
 
   static MaterialColor materialBlackColor = MaterialColor(0xFF000000, black);
   static MaterialColor materialWhiteColor = MaterialColor(0xFFFFFFFF, white);
+
+  static const greyScale = ColorFilter.matrix(<double>[
+    0.2126,0.7152,0.0722,0,0,
+    0.2126,0.7152,0.0722,0,0,
+    0.2126,0.7152,0.0722,0,0,
+    0,0,0,1,0
+  ]);
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SomethingWentWrongPage extends StatelessWidget {
   const SomethingWentWrongPage({
     Key? key,
-    this.message = "Something went wrong",
+    this.message = "Unable to retrieve the data at this moment",
   }) : super(key: key);
   final String message;
 
@@ -14,7 +14,7 @@ class SomethingWentWrongPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            "images/something-went-wrong.jpg",
+            "assets/images/something-went-wrong.jpg",
             width: 300,
             height: 200,
           ),
