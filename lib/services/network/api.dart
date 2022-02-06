@@ -54,7 +54,7 @@ class Api implements ApiBase {
     if (response.statusCode == 200) {
       try {
         final ParentResponse parentResponse =
-        ParentResponse.fromJson(response.body.toString());
+            ParentResponse.fromJson(response.body.toString());
         return parentResponse;
       } catch (e) {
         return ParentResponse(parentList: []);

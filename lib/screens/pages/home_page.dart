@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Provider<ApiBase>(
-      create: (context)=> Api(),
+      create: (context) => Api(),
       child: WillPopScope(
         onWillPop: () async =>
             !await navigatorKeys[_currentTab]!.currentState!.maybePop(),
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
           onSelectTab: _select,
           widgetBuilders: widgetBuilders,
           navigatorKeys: navigatorKeys,
-          currentIndex: _currentIndex ,
+          currentIndex: _currentIndex,
         ),
       ),
     );

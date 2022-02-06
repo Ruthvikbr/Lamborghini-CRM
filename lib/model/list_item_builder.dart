@@ -18,7 +18,7 @@ class ListItemBuilder<T> extends StatelessWidget {
     if (snapshot.hasData && snapshot.data != null) {
       final List<T> items = snapshot.data!;
       if (items.isNotEmpty) {
-       return _buildList(items);
+        return _buildList(items);
       } else {
         return const SomethingWentWrongPage();
       }

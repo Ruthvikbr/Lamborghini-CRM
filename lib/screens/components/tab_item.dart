@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum TabItem { dashboard, merch, info, account }
 
-class TabItemData{
+class TabItemData {
   const TabItemData({required this.title, required this.icon});
   final String title;
   final IconData icon;
@@ -13,5 +13,4 @@ class TabItemData{
     TabItem.info: TabItemData(title: "Categories", icon: Icons.electric_car),
     TabItem.account: TabItemData(title: "Account", icon: Icons.person),
   };
-
 }

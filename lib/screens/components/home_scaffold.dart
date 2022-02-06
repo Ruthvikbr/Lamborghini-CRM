@@ -8,8 +8,7 @@ class HomeScaffold extends StatelessWidget {
       required this.onSelectTab,
       required this.widgetBuilders,
       required this.navigatorKeys,
-      required this.currentIndex
-      })
+      required this.currentIndex})
       : super(key: key);
 
   final TabItem currentTab;
@@ -25,7 +24,6 @@ class HomeScaffold extends StatelessWidget {
         child: widgetBuilders.values.elementAt(currentIndex).call(context),
       ),
       bottomNavigationBar: BottomNavigationBar(
-
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           _buildItem(TabItem.dashboard),

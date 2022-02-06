@@ -18,7 +18,8 @@ class CategoriesBloc {
 
   Stream<List<Parent>> get parentStream => _parentStreamController.stream;
 
-  final StreamController<List<Car>> _carStreamController = StreamController.broadcast();
+  final StreamController<List<Car>> _carStreamController =
+      StreamController.broadcast();
 
   Stream<List<Car>> get carStream => _carStreamController.stream;
 
@@ -40,7 +41,9 @@ class CategoriesBloc {
 
   Future<void> getCars(String categoryName) async {
     CarResponse carResponse = await apiBase.getCars();
-    List<Car> cars = carResponse.carModelList.where((element) => element.parentModelName==categoryName).toList();
+    List<Car> cars = carResponse.carModelList
+        .where((element) => element.parentModelName == categoryName)
+        .toList();
     _setCars(cars);
   }
 }

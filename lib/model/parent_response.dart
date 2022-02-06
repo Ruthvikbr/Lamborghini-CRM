@@ -2,12 +2,10 @@ import 'dart:convert';
 
 import 'package:lamborghini/model/parent.dart';
 
-class ParentResponse{
+class ParentResponse {
   final List<Parent> parentList;
 
   ParentResponse({required this.parentList});
-
-
 
   factory ParentResponse.fromJson(String data) {
     return ParentResponse(

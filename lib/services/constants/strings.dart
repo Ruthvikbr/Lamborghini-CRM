@@ -25,5 +25,4 @@ class Strings {
 
   //UTILS
   static String pleaseWait = "Please wait...";
-
 }

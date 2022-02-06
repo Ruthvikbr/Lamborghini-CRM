@@ -9,8 +9,7 @@ class CarResponse {
 
   factory CarResponse.fromJson(String data) {
     return CarResponse(
-      carModelList: List<Car>.from(
-          json.decode(data).map((item) => Car.fromJson(item)))
-    );
+        carModelList: List<Car>.from(
+            json.decode(data).map((item) => Car.fromJson(item))));
   }
 }
