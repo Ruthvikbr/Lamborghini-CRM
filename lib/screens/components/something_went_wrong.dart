@@ -14,7 +14,7 @@ class SomethingWentWrongPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
-            "assets/images/something-went-wrong.jpg",
+            "assets/images/something_went_wrong.png",
             width: 300,
             height: 200,
           ),
@@ -22,7 +22,7 @@ class SomethingWentWrongPage extends StatelessWidget {
             message,
             style: const TextStyle(
               fontSize: 16.0,
-              color: Colors.black87,
+              color: Colors.white,
             ),
             textAlign: TextAlign.center,
           ),

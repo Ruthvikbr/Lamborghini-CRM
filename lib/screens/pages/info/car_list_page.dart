@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lamborghini/blocs/categories_bloc.dart';
 import 'package:lamborghini/model/car.dart';
-import 'package:lamborghini/model/list_item_builder.dart';
+import 'package:lamborghini/screens/components/list_item_builder.dart';
 import 'package:lamborghini/model/parent.dart';
 import 'package:lamborghini/screens/components/app_bar_text_component.dart';
 import 'package:lamborghini/screens/components/car_item.dart';

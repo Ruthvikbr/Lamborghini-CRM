@@ -7,10 +7,12 @@ class TextComponent extends StatelessWidget {
     required this.text,
     required this.textStyle,
     this.textAlign,
+    this.maxLines,
   }) : super(key: key);
   final String text;
   final TextStyle textStyle;
   final TextAlign? textAlign;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class TextComponent extends StatelessWidget {
       style: GoogleFonts.notoSans(
         textStyle: textStyle,
       ),
+      maxLines: maxLines??1,
       textAlign: textAlign,
     );
   }

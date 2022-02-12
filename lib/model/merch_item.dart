@@ -22,8 +22,8 @@ class MerchItem {
   factory MerchItem.fromJson(Map<String, dynamic> json) {
     return MerchItem(
       itemName: json["itemName"],
-      cost: json["itemName"],
-      category: json["itemName"],
+      cost: json["cost"],
+      category: json["category"],
       imageUrls: List<String>.from(json["imageUrls"].map((x) => x)),
       description: json["description"],
       primaryDisplayImage: json["primaryDisplayImage"],

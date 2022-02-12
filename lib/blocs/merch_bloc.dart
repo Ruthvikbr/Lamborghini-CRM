@@ -10,7 +10,7 @@ class MerchBloc {
 
   MerchBloc({required this.apiBase}) {
     getCategories();
-        getMerchItems();
+    getMerchItems();
   }
 
   final StreamController<List<MerchItem>> _merchStreamController =

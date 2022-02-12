@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:lamborghini/model/cars_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:lamborghini/model/category.dart';
@@ -112,6 +113,7 @@ class Api implements ApiBase {
         final MerchResponse merchResponse = MerchResponse.fromJson(response.body.toString());
         return merchResponse;
       } catch (e) {
+        debugPrint(e.toString());
         return MerchResponse(merchItemList: []);
       }
     } else {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lamborghini/model/car.dart';
 import 'package:lamborghini/screens/components/app_bar_text_component.dart';
-import 'package:lamborghini/screens/components/car_image_item.dart';
+import 'package:lamborghini/screens/components/image_item.dart';
 import 'package:lamborghini/screens/components/text_component.dart';
 
 class CarDetail extends StatelessWidget {
@@ -25,7 +25,7 @@ class CarDetail extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              CarImageItem(
+              ImageItem(
                 imageUrl: car.imageUrl,
                 height: 250,
               ),
@@ -132,7 +132,7 @@ class CarDetail extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          CarImageItem(
+          ImageItem(
             imageUrl: car.imageUrl,
             height: 250,
           ),

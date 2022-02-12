@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:lamborghini/model/car.dart';
-import 'package:lamborghini/screens/components/image_item.dart';
+import 'package:lamborghini/model/merch_item.dart';
 import 'package:lamborghini/screens/components/text_component.dart';
 
-class CarItem extends StatelessWidget {
-  const CarItem({Key? key, required this.car, required this.onPress})
-      : super(key: key);
-  final Car car;
+class MerchListItem extends StatelessWidget {
+  const MerchListItem({
+    Key? key,
+    required this.item,
+    required this.onPress,
+  }) : super(key: key);
+  final MerchItem item;
   final VoidCallback onPress;
 
   @override
@@ -24,13 +26,10 @@ class CarItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ImageItem(
-                imageUrl: car.imageUrl,
-              ),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: TextComponent(
-                  text: car.modelName.toUpperCase(),
+                  text: item.itemName,
                   textStyle: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
