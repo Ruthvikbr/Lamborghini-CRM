@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:lamborghini/model/merch_item.dart';
 import 'package:lamborghini/screens/components/app_bar_text_component.dart';
+import 'package:lamborghini/screens/components/custom_button.dart';
 import 'package:lamborghini/screens/components/image_item.dart';
 import 'package:lamborghini/screens/components/text_component.dart';
 
@@ -24,7 +25,7 @@ class MerchItemDetailPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _buildCarousel(merchItem.imageUrls),
             const SizedBox(
@@ -49,7 +50,7 @@ class MerchItemDetailPage extends StatelessWidget {
             ),
             _rowTextComponents(
               "${merchItem.cost.toString()} PTS",
-              merchItem.discount != null && merchItem.discount!= 0.0
+              merchItem.discount != null && merchItem.discount != 0.0
                   ? "${merchItem.discount.toString()} PTS"
                   : "",
               const TextStyle(
@@ -58,11 +59,10 @@ class MerchItemDetailPage extends StatelessWidget {
                 color: Colors.redAccent,
               ),
               const TextStyle(
-                fontSize: 14.0,
-                fontStyle: FontStyle.normal,
-                color: Colors.white54,
-                decoration: TextDecoration.lineThrough
-              ),
+                  fontSize: 14.0,
+                  fontStyle: FontStyle.normal,
+                  color: Colors.white54,
+                  decoration: TextDecoration.lineThrough),
             ),
             const SizedBox(
               height: 10,
@@ -75,6 +75,26 @@ class MerchItemDetailPage extends StatelessWidget {
                 color: Colors.white54,
               ),
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            CustomButton(
+
+              child: TextComponent(
+                text: merchItem.productAvailability
+                    ? "Redeem"
+                    : "Product currently unavailable",
+                textStyle: const TextStyle(
+                  fontSize: 14.0,
+                  fontStyle: FontStyle.normal,
+                  color: Colors.white,
+                ),
+              ),
+              color:
+                  merchItem.productAvailability ? Colors.amber : Colors.grey,
+              borderRadius: 12.0,
+              onPressed: merchItem.productAvailability ? () {} : () {},
+            )
           ],
         ),
       ),

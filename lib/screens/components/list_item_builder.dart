@@ -89,7 +89,8 @@ class ListItemBuilder<T> extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 4.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       TextComponent(
                         text: "${items[index].cost.toString()} PTS",
@@ -97,6 +98,9 @@ class ListItemBuilder<T> extends StatelessWidget {
                             const TextStyle(color: Colors.red, fontSize: 16),
                         textAlign: TextAlign.left,
                         maxLines: 1,
+                      ),
+                      const SizedBox(
+                        width: 10,
                       ),
                       TextComponent(
                         text: items[index].discount != null && items[index].discount!= 0.0
