@@ -79,7 +79,6 @@ class MerchItemDetailPage extends StatelessWidget {
               height: 30,
             ),
             CustomButton(
-
               child: TextComponent(
                 text: merchItem.productAvailability
                     ? "Redeem"
@@ -90,8 +89,7 @@ class MerchItemDetailPage extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              color:
-                  merchItem.productAvailability ? Colors.amber : Colors.grey,
+              color: merchItem.productAvailability ? Colors.amber : Colors.grey,
               borderRadius: 12.0,
               onPressed: merchItem.productAvailability ? () {} : () {},
             )
@@ -134,6 +132,7 @@ class MerchItemDetailPage extends StatelessWidget {
         TextComponent(
           text: primaryString,
           textStyle: primaryStyle,
+          maxLines: 2,
         ),
         const SizedBox(
           width: 10,

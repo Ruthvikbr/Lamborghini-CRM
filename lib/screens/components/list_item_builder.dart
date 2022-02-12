@@ -83,6 +83,7 @@ class ListItemBuilder<T> extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: 18),
                     textAlign: TextAlign.left,
+                    maxLines: 2,
                   ),
                 ),
                 Padding(
