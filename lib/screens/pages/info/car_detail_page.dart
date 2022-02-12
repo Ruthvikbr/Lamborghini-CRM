@@ -23,7 +23,6 @@ class CarDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
             children: [
               ImageItem(
                 imageUrl: car.imageUrl,
@@ -64,9 +63,9 @@ class CarDetail extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              TextComponent(
-                text: car.overview,
-                textStyle: const TextStyle(
+              Text(
+                car.overview,
+                style: const TextStyle(
                   fontSize: 18.0,
                   fontStyle: FontStyle.italic,
                   color: Colors.white54,
@@ -88,7 +87,7 @@ class CarDetail extends StatelessWidget {
               carDetailsWidget("Max speed", car.maxSpeed),
               const SizedBox(height: 10),
               carDetailsWidget("0 - 100 km/h", car.zeroToHundredAcceleration),
-              merchList()
+
             ],
           ),
         ),
@@ -118,24 +117,4 @@ class CarDetail extends StatelessWidget {
     );
   }
 
-  Widget merchList() {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          const TextComponent(
-            text: "Merch",
-            textStyle: TextStyle(
-                fontSize: 24.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 20),
-          ImageItem(
-            imageUrl: car.imageUrl,
-            height: 250,
-          ),
-        ]);
-  }
 }

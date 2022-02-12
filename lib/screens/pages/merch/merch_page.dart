@@ -33,7 +33,7 @@ class MerchPage extends StatelessWidget {
                 snapshot: snapshot,
                 itemWidgetBuilder: (context, item) => MerchListItem(
                   item: item,
-                  onPress: () {},
+                  onPress: (item) => {},
                 ),
                 onPress: (item) => navigateToDetailsScreen(context, item),
               ));

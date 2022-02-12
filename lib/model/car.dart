@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Car {
   final String modelName;
   final String parentModelName;
@@ -19,16 +21,17 @@ class Car {
     required this.id,
   });
 
-  factory Car.fromJson(Map<String, dynamic> json) {
+  factory Car.fromJson(Map<String, dynamic> data) {
+    debugPrint(data.toString());
     return Car(
-      modelName: json["modelName"],
-      parentModelName: json["parentModelName"],
-      power: json["power"],
-      maxSpeed: json["maxSpeed"],
-      zeroToHundredAcceleration: json["zeroToHundredAcceleration"],
-      overview: json["overview"],
-      imageUrl: json["imageUrl"],
-      id: json["id"],
+      modelName: data["modelName"],
+      parentModelName: data["parentModelName"],
+      power: data["power"],
+      maxSpeed: data["maxSpeed"],
+      zeroToHundredAcceleration: data["zeroToHundredAcceleration"],
+      overview: data["overview"],
+      imageUrl: data["imageUrl"],
+      id: data["id"],
     );
   }
 }

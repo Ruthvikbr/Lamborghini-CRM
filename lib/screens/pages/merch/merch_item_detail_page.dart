@@ -35,7 +35,7 @@ class MerchItemDetailPage extends StatelessWidget {
               merchItem.itemName.toUpperCase(),
               merchItem.category,
               const TextStyle(
-                fontSize: 24.0,
+                fontSize: 22.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -92,7 +92,7 @@ class MerchItemDetailPage extends StatelessWidget {
               color: merchItem.productAvailability ? Colors.amber : Colors.grey,
               borderRadius: 12.0,
               onPressed: merchItem.productAvailability ? () {} : () {},
-            )
+            ),
           ],
         ),
       ),
@@ -104,7 +104,10 @@ class MerchItemDetailPage extends StatelessWidget {
       items: images.map<Widget>((i) {
         return Builder(
           builder: (BuildContext context) {
-            return ImageItem(imageUrl: i);
+            return ImageItem(
+              imageUrl: i,
+              fitType: BoxFit.fitHeight,
+            );
           },
         );
       }).toList(),

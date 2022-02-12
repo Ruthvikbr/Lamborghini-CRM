@@ -9,39 +9,70 @@ class MerchListItem extends StatelessWidget {
     required this.onPress,
   }) : super(key: key);
   final MerchItem item;
-  final VoidCallback onPress;
+  final Function(MerchItem) onPress;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Card(
-        shadowColor: Colors.white,
-        elevation: 8,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
+    return InkWell(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
         ),
-        child: InkWell(
-          onTap: onPress,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: TextComponent(
-                  text: item.itemName,
-                  textStyle: const TextStyle(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+                child: Image.network(item.primaryDisplayImage)),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 4.0),
+              child: TextComponent(
+                text: item.itemName.toString(),
+                textStyle: const TextStyle(
                     color: Colors.black,
-                    fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    fontSize: 18),
+                textAlign: TextAlign.left,
+                maxLines: 2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextComponent(
+                    text: "${item.cost.toString()} PTS",
+                    textStyle:
+                    const TextStyle(color: Colors.red, fontSize: 16),
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
                   ),
-                  textAlign: TextAlign.left,
-                ),
-              )
-            ],
-          ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  TextComponent(
+                    text: item.discount != null && item.discount!= 0.0
+                        ? "${item.discount.toString()} PTS"
+                        : "",
+                    textStyle: const TextStyle(
+                        fontSize: 14.0,
+                        fontStyle: FontStyle.normal,
+                        color: Colors.black38,
+                        decoration: TextDecoration.lineThrough),
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
+      onTap: () => onPress(item),
     );
   }
+
 }

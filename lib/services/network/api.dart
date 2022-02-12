@@ -38,6 +38,7 @@ class Api implements ApiBase {
             CarResponse.fromJson(response.body.toString());
         return carResponse;
       } catch (e) {
+        debugPrint(e.toString());
         final CarResponse carResponse = CarResponse(carModelList: []);
         return carResponse;
       }
