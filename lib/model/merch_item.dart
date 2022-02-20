@@ -31,21 +31,4 @@ class MerchItem {
       discount: json["discount"] ?? 0.0,
     );
   }
-
-  Map<String, dynamic> toMap() => {
-    "itemName": itemName,
-    "cost": cost,
-    "discount": discount,
-    "category": category,
-    "imageUrls": List<dynamic>.from(imageUrls.map((x) => x)),
-    "description": description,
-    "primaryDisplayImage": primaryDisplayImage,
-    "productAvailability": productAvailability,
-  };
 }
-
-
-
-
-
-
