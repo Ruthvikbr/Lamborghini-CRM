@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:lamborghini/model/cars_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:lamborghini/model/category.dart';
 import 'package:lamborghini/model/merch_response.dart';
 import 'package:lamborghini/model/parent_response.dart';
+import 'package:lamborghini/model/simple_response.dart';
+import 'package:lamborghini/model/transaction.dart';
 import 'package:lamborghini/services/constants/api_constants.dart';
 import 'package:lamborghini/services/shared_preferences.dart';
 
@@ -17,6 +18,8 @@ abstract class ApiBase {
   Future<Category> getMerchCategories();
 
   Future<MerchResponse> getMerchItems();
+
+  Future<SimpleResponse> purchaseMerchItem(Transaction transaction);
 }
 
 class Api implements ApiBase {
@@ -38,7 +41,6 @@ class Api implements ApiBase {
             CarResponse.fromJson(response.body.toString());
         return carResponse;
       } catch (e) {
-        debugPrint(e.toString());
         final CarResponse carResponse = CarResponse(carModelList: []);
         return carResponse;
       }
@@ -111,14 +113,57 @@ class Api implements ApiBase {
 
     if (response.statusCode == 200) {
       try {
-        final MerchResponse merchResponse = MerchResponse.fromJson(response.body.toString());
+        final MerchResponse merchResponse =
+            MerchResponse.fromJson(response.body.toString());
         return merchResponse;
       } catch (e) {
-        debugPrint(e.toString());
         return MerchResponse(merchItemList: []);
       }
     } else {
       return MerchResponse(merchItemList: []);
+    }
+  }
+
+  @override
+  Future<SimpleResponse> purchaseMerchItem(Transaction transaction) async {
+    String username = await SharedPrefs.getStringSharedPreference("mobile");
+    String password = await SharedPrefs.getStringSharedPreference("password");
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
+    final response = await http.post(
+      Uri.parse("${ApiConstants.baseUrl}${ApiConstants.purchaseItems}"),
+      headers: {
+        "Authorization": basicAuth,
+        "Content-Type": "application/json"
+      },
+      body: jsonEncode({
+        "itemName": transaction.itemName,
+        "customer": transaction.customer,
+        "points": transaction.points.toString(),
+        "transactionType": transaction.transactionType,
+        "transactionDate": transaction.transactionDate
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        final SimpleResponse simpleResponse =
+            SimpleResponse.fromJson(jsonDecode(response.body.toString()));
+        return simpleResponse;
+      } catch (e) {
+        final SimpleResponse simpleResponse = SimpleResponse(
+          isSuccessful: false,
+          message: "Something went wrong",
+        );
+        return simpleResponse;
+      }
+    } else {
+      final SimpleResponse simpleResponse = SimpleResponse(
+        isSuccessful: false,
+        message: "Something went wrong",
+      );
+      return simpleResponse;
     }
   }
 }

@@ -1,15 +1,25 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:lamborghini/blocs/merch_bloc.dart';
 import 'package:lamborghini/model/merch_item.dart';
+import 'package:lamborghini/model/simple_response.dart';
+import 'package:lamborghini/model/transaction.dart';
 import 'package:lamborghini/screens/components/app_bar_text_component.dart';
 import 'package:lamborghini/screens/components/custom_button.dart';
 import 'package:lamborghini/screens/components/image_item.dart';
 import 'package:lamborghini/screens/components/text_component.dart';
+import 'package:lamborghini/screens/pages/merch/merch_item_purchase_response_page.dart';
+import 'package:lamborghini/services/shared_preferences.dart';
 
 class MerchItemDetailPage extends StatelessWidget {
-  const MerchItemDetailPage({Key? key, required this.merchItem})
-      : super(key: key);
+  const MerchItemDetailPage({
+    Key? key,
+    required this.merchItem,
+    required this.bloc,
+  }) : super(key: key);
   final MerchItem merchItem;
+  final MerchBloc bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +101,36 @@ class MerchItemDetailPage extends StatelessWidget {
               ),
               color: merchItem.productAvailability ? Colors.amber : Colors.grey,
               borderRadius: 12.0,
-              onPressed: merchItem.productAvailability ? () {} : () {},
+              onPressed: merchItem.productAvailability
+                  ? () => buyItem(context)
+                  : () {},
             ),
           ],
         ),
       ),
     );
+  }
+
+  void buyItem(BuildContext context) async {
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('dd/MM/yyyy');
+    Transaction transaction = Transaction(
+        itemName: merchItem.itemName,
+        customer: await SharedPrefs.getStringSharedPreference("mobile"),
+        points: merchItem.cost,
+        transactionType: "Redemption",
+        transactionDate: formatter.format(now));
+
+    SimpleResponse simpleResponse = await bloc.buyMerchItem(transaction);
+    navigateToResultPage(context, simpleResponse);
+  }
+
+  Future<void> navigateToResultPage(
+      BuildContext context, SimpleResponse simpleResponse) async {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => MerchPurchaseResponsePage(
+              simpleResponse: simpleResponse,
+            )));
   }
 
   Widget _buildCarousel(List<String> images) {

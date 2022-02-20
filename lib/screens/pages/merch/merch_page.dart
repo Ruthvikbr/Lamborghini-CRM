@@ -42,6 +42,9 @@ class MerchPage extends StatelessWidget {
 
   void navigateToDetailsScreen(BuildContext context, MerchItem merchItem) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => MerchItemDetailPage(merchItem: merchItem)));
+        builder: (context) => MerchItemDetailPage(
+              merchItem: merchItem,
+              bloc: merchBloc,
+            )));
   }
 }

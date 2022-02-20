@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:lamborghini/model/category.dart';
 import 'package:lamborghini/model/merch_item.dart';
 import 'package:lamborghini/model/merch_response.dart';
+import 'package:lamborghini/model/simple_response.dart';
+import 'package:lamborghini/model/transaction.dart';
 import 'package:lamborghini/services/network/api.dart';
 
 class MerchBloc {
@@ -46,5 +49,21 @@ class MerchBloc {
     MerchResponse merchResponse = await apiBase.getMerchItems();
     List<MerchItem> merchItems = merchResponse.merchItemList;
     _setMerchItems(merchItems);
+  }
+
+  Future<SimpleResponse> buyMerchItem(Transaction transaction) async {
+    try {
+      SimpleResponse simpleResponse =
+          await apiBase.purchaseMerchItem(transaction);
+
+      return simpleResponse;
+    } catch (e) {
+      debugPrint(e.toString());
+      final SimpleResponse simpleResponse = SimpleResponse(
+        isSuccessful: false,
+        message: "Something went wrong",
+      );
+      return simpleResponse;
+    }
   }
 }
