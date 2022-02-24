@@ -7,6 +7,7 @@ import 'package:lamborghini/model/merch_response.dart';
 import 'package:lamborghini/model/parent_response.dart';
 import 'package:lamborghini/model/simple_response.dart';
 import 'package:lamborghini/model/transaction.dart';
+import 'package:lamborghini/model/user.dart';
 import 'package:lamborghini/services/constants/api_constants.dart';
 import 'package:lamborghini/services/shared_preferences.dart';
 
@@ -20,6 +21,12 @@ abstract class ApiBase {
   Future<MerchResponse> getMerchItems();
 
   Future<SimpleResponse> purchaseMerchItem(Transaction transaction);
+
+  Future<User?> getCustomer();
+
+  Future<List<Transaction>> getTransactions();
+
+  Future<SimpleResponse> purchasePoints(Transaction transaction);
 }
 
 class Api implements ApiBase {
@@ -133,10 +140,7 @@ class Api implements ApiBase {
 
     final response = await http.post(
       Uri.parse("${ApiConstants.baseUrl}${ApiConstants.purchaseItems}"),
-      headers: {
-        "Authorization": basicAuth,
-        "Content-Type": "application/json"
-      },
+      headers: {"Authorization": basicAuth, "Content-Type": "application/json"},
       body: jsonEncode({
         "itemName": transaction.itemName,
         "customer": transaction.customer,
@@ -164,6 +168,93 @@ class Api implements ApiBase {
         message: "Something went wrong",
       );
       return simpleResponse;
+    }
+  }
+
+  @override
+  Future<User?> getCustomer() async {
+    String username = await SharedPrefs.getStringSharedPreference("mobile");
+    String password = await SharedPrefs.getStringSharedPreference("password");
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+        Uri.parse("${ApiConstants.baseUrl}${ApiConstants.getCustomer}"),
+        headers: {
+          "Authorization": basicAuth,
+        });
+
+    if (response.statusCode == 200) {
+      try {
+        final User user = User.fromJson(jsonDecode(response.body.toString()));
+        return user;
+      } catch (e) {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<Transaction>> getTransactions() async {
+    String username = await SharedPrefs.getStringSharedPreference("mobile");
+    String password = await SharedPrefs.getStringSharedPreference("password");
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.get(
+        Uri.parse("${ApiConstants.baseUrl}${ApiConstants.getTransactions}"),
+        headers: {
+          "Authorization": basicAuth,
+        });
+
+    if (response.statusCode == 200) {
+      try {
+        String jsonData = response.body.toString();
+
+        final List<Transaction> transactions = List<Transaction>.from(
+            jsonDecode(jsonData)
+                .map((transaction) => Transaction.fromJson(transaction)));
+        return transactions;
+      } catch (e) {
+        return <Transaction>[];
+      }
+    } else {
+      return <Transaction>[];
+    }
+  }
+
+  @override
+  Future<SimpleResponse> purchasePoints(Transaction transaction) async {
+    String username = await SharedPrefs.getStringSharedPreference("mobile");
+    String password = await SharedPrefs.getStringSharedPreference("password");
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    final response = await http.post(
+      Uri.parse("${ApiConstants.baseUrl}${ApiConstants.purchasePoints}"),
+      headers: {
+        "Authorization": basicAuth,
+      },
+      body: jsonEncode({
+        "itemName": transaction.itemName,
+        "customer": transaction.customer,
+        "points": transaction.points.toString(),
+        "transactionType": transaction.transactionType,
+        "transactionDate": transaction.transactionDate
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        SimpleResponse simpleResponse =
+            SimpleResponse.fromJson(jsonDecode(response.body.toString()));
+        return simpleResponse;
+      } catch (e) {
+        return SimpleResponse(
+            isSuccessful: false, message: "Something went wrong");
+      }
+    } else {
+      return SimpleResponse(
+          isSuccessful: false, message: "Something went wrong");
     }
   }
 }
