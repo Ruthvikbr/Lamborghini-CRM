@@ -9,6 +9,8 @@ import 'package:lamborghini/services/shared_preferences.dart';
 abstract class AuthBase {
   Future<SimpleResponse> accountRequest(
       AccountRequest accountRequest, String accountRequestType);
+
+  Future<void> logout();
 }
 
 class Auth implements AuthBase {
@@ -60,6 +62,7 @@ class Auth implements AuthBase {
     }
   }
 
+  @override
   Future<void> logout() async {
     await SharedPrefs.setStringSharedPreference("mobile", "");
     await SharedPrefs.setStringSharedPreference("password", "");

@@ -71,9 +71,9 @@ class _SignInState extends State<SignIn> {
       child: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-          image: AssetImage("assets/images/login-background.png"),
-          fit: BoxFit.fill,
-        )),
+              image: AssetImage("assets/images/login-background.png"),
+              fit: BoxFit.fill,
+            )),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
           child: Column(
