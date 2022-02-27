@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
-      TabItem.dashboard: (_) => const DashboardPage(),
+      TabItem.dashboard: (context) => DashboardPage.create(context),
       TabItem.merch: (context) => MerchPage.create(context),
       TabItem.info: (context) => Categories.create(context),
       TabItem.account: (_) => const AccountPage(),

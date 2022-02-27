@@ -8,4 +8,5 @@ A Loyalty application for Lamborghini merch and car information
 - Car models
 - Car details
 - Merch Store
-- Transactions and redemptions (To-Do)
+- Transactions and redemptions
+- Get customer

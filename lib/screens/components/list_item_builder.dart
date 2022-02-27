@@ -22,7 +22,6 @@ class ListItemBuilder<T> extends StatelessWidget {
     if (snapshot.hasData && snapshot.data != null) {
       final List<T> items = snapshot.data!;
       if (items.isNotEmpty) {
-        debugPrint("${items is List<MerchItem>}");
         if (items is List<MerchItem>) {
           return _gridList(items as List<MerchItem>, context);
         } else {
@@ -45,6 +44,8 @@ class ListItemBuilder<T> extends StatelessWidget {
   Widget _buildList(List<T> items) {
     return ListView.builder(
         itemCount: items.length + 2,
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(), // new
         itemBuilder: (context, index) {
           if (index == 0 || index == items.length + 1) {
             return Container();

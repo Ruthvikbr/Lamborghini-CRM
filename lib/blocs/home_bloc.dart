@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:lamborghini/model/simple_response.dart';
 import 'package:lamborghini/model/transaction.dart';
 import 'package:lamborghini/model/user.dart';
 import 'package:lamborghini/services/network/api.dart';
@@ -12,11 +14,11 @@ class HomeBloc {
     getTransactions();
   }
 
-  final StreamController<User?> _userStreamController = StreamController();
+  final StreamController<User> _userStreamController = StreamController();
 
-  Stream<User?> get userStream => _userStreamController.stream;
+  Stream<User> get userStream => _userStreamController.stream;
 
-  void _setUser(User? user) {
+  void _setUser(User user) {
     _userStreamController.add(user);
   }
 
@@ -33,9 +35,11 @@ class HomeBloc {
   Future<void> getCustomer() async {
     try {
       User? user = await apiBase.getCustomer();
-      _setUser(user);
+      if (user != null) {
+        _setUser(user);
+      }
     } catch (e) {
-      _setUser(null);
+      debugPrint(e.toString());
     }
   }
 
@@ -44,7 +48,24 @@ class HomeBloc {
       List<Transaction> transactions = await apiBase.getTransactions();
       _setTransaction(transactions);
     } catch (e) {
+      debugPrint(e.toString());
       _setTransaction(<Transaction>[]);
     }
+  }
+
+  Future<SimpleResponse> purchasePoints(Transaction transaction) async {
+    try {
+      SimpleResponse simpleResponse = await apiBase.purchasePoints(transaction);
+      getCustomer();
+      return simpleResponse;
+    } catch (e) {
+      return SimpleResponse(
+          isSuccessful: false, message: "Something went wrong");
+    }
+  }
+
+  void dispose() {
+    _userStreamController.close();
+    _transactionStreamController.close();
   }
 }
